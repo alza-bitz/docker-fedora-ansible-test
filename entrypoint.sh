@@ -2,7 +2,7 @@
 
 set -e
 
-readonly username=${USERNAME:-user}
+readonly username=${USERNAME:-root}
 readonly password=$(pwgen -s 12 1)
 readonly authorized_keys=${AUTHORIZED_KEYS}
 
@@ -11,10 +11,10 @@ __create_rundir() {
 }
 
 __create_user() {
-  useradd $username
+  [[ $username != "root" ]] && useradd $username
   printf '%s:%s' $username $password | chpasswd
   printf '=> Set password for user '\''%s'\'': %s\n' $username $password
-  if [[ -d /etc/sudoers.d ]]; then
+  if [[ $username != "root" && -d /etc/sudoers.d ]]; then
     printf '%s ALL=(ALL) NOPASSWD: ALL\n' $username > /etc/sudoers.d/$username
   fi
 }
