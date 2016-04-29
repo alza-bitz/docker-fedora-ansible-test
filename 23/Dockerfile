@@ -1,4 +1,4 @@
-FROM fedora:latest
+FROM fedora:23
 MAINTAINER http://github.com/alzadude/docker-fedora-ansible-test
 
 # Install packages and set up sshd
